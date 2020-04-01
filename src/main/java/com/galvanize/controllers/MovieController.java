@@ -25,4 +25,9 @@ public class MovieController {
         return service.getAllMovies();
     }
 
+    @GetMapping("/{imdbId}")
+    public Movie getMovieByImdbId(@PathVariable String imdbId){
+        return service.getMovieByImdbId(imdbId);
+    }
+
 }

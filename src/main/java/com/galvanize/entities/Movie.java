@@ -21,6 +21,8 @@ public class Movie {
     String title;
     @Column
     LocalDate released;
+    @Column
+    String year;
 
     public Movie() {
     }
@@ -34,12 +36,13 @@ public class Movie {
         this.released = released;
     }
 
-    public Movie(String imdbId, String actors, String director, String title, LocalDate released) {
+    public Movie(String imdbId, String actors, String director, String title, LocalDate released, String year) {
         this.imdbId = imdbId;
         this.actors = actors;
         this.director = director;
         this.title = title;
         this.released = released;
+        this.year = year;
     }
 
     public long getMovieId() {
@@ -90,8 +93,12 @@ public class Movie {
         this.released = released;
     }
 
+    public void setYear(String year) {
+        this.year = year;
+    }
+
     public String getYear(){
-        return ""+released.getYear();
+        return year;
     }
 
     @Override
