@@ -30,4 +30,7 @@ public class MovieController {
         return service.getMovieByImdbId(imdbId);
     }
 
+    @GetMapping("/title")
+    public List<Movie> getAllMoviesByTitle(@RequestParam String containing){ return service.getAllMoviesByTitle(containing); }
+
 }
