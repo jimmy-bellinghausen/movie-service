@@ -13,6 +13,9 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import javax.transaction.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -40,6 +43,18 @@ class MovieControllerTest {
         mvc.perform(post("/api/movie").content(json).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").value(expected));
+    }
+
+    @Test
+    public void getAllMovies() throws Exception{
+        Movie expected = new Movie();
+        expected.setMovieId(1L);
+        List<Movie> expectedMovies = new ArrayList<>();
+        expectedMovies.add(expected);
+        when(service.getAllMovies()).thenReturn(expectedMovies);
+        mvc.perform(get("/api/movie"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0]").value(expected));
     }
 
 }

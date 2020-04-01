@@ -5,6 +5,7 @@ import com.galvanize.repositories.MovieRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @Transactional
@@ -17,5 +18,9 @@ public class MovieService {
 
     public Movie postMovie(Movie movieToPost) {
         return repository.save(movieToPost);
+    }
+
+    public List<Movie> getAllMovies() {
+        return repository.findAll();
     }
 }
