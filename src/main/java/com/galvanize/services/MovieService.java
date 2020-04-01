@@ -27,4 +27,8 @@ public class MovieService {
     public Movie getMovieByImdbId(String imdbId) {
         return repository.findByImdbId(imdbId).orElse(null);
     }
+
+    public List<Movie> getAllMoviesByTitle(String searchPhrase) {
+        return null;
+    }
 }

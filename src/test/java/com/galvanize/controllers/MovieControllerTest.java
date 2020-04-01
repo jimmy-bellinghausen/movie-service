@@ -69,4 +69,17 @@ class MovieControllerTest {
                 .andExpect(jsonPath("$").value(expected));
     }
 
+    @Test
+    public void getAllMoviesByTitle() throws Exception{
+        Movie expected = new Movie();
+        expected.setTitle("A Very Unique Title");
+        expected.setMovieId(1L);
+        List<Movie> expectedList = new ArrayList<>();
+        expectedList.add(expected);
+        when(service.getAllMoviesByTitle(anyString())).thenReturn(expectedList);
+        mvc.perform(get("/api/movie/title?containing=whatever"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0]").value(expected));
+    }
+
 }

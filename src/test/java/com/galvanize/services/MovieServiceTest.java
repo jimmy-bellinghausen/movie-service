@@ -54,4 +54,15 @@ class MovieServiceTest {
         assertEquals(expected, service.getMovieByImdbId(expected.getImdbId()));
     }
 
+    @Test
+    public void getAllMoviesByTitle(){
+        Movie expected = new Movie();
+        expected.setTitle("A Very Unique Title");
+        expected.setMovieId(1L);
+        List<Movie> expectedList = new ArrayList<>();
+        expectedList.add(expected);
+        when(repository.findAllByTitleContaining(anyString())).thenReturn(expectedList);
+        assertEquals(expectedList, service.getAllMoviesByTitle("Who cares."));
+    }
+
 }

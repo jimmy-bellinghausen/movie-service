@@ -25,6 +25,13 @@ class MovieRepositoryTest {
     }
 
     @Test
+    public void findAllMoviesByTitle(){
+        Movie movieToFind = repository.save(new Movie("24", "Johnny Depp, Someone Else", "That guy", "The Movie to Find", LocalDate.now(), "2020"));
+        Movie movieToNotFind = repository.save(new Movie("36", "Johnny Depp, Someone Else", "That guy", "The Movie", LocalDate.now(), "2020"));
+        assertEquals(movieToFind, repository.findAllByTitleContaining("Find").get(0));
+    }
+
+    @Test
     public void deleteMovie(){
         Movie movieToDelete = repository.save(new Movie("24", "Johnny Depp, Someone Else", "That guy", "The Movie", LocalDate.now(), "2020"));
         assertEquals(1,repository.deleteByMovieId(movieToDelete.getMovieId()));
