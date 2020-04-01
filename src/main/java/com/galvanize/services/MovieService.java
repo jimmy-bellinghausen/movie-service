@@ -29,6 +29,6 @@ public class MovieService {
     }
 
     public List<Movie> getAllMoviesByTitle(String searchPhrase) {
-        return null;
+        return repository.findAllByTitleContaining(searchPhrase);
     }
 }
