@@ -1,6 +1,9 @@
 package com.galvanize.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.galvanize.entities.Movie;
 import com.galvanize.services.MovieService;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,5 +23,14 @@ class MovieControllerTest {
 
     @MockBean
     MovieService service;
+
+    ObjectMapper mapper = new ObjectMapper();
+
+    @Test
+    public void postMovie() throws Exception{
+        Movie expected = new Movie();
+        String json = mapper.writeValueAsString(expected);
+
+    }
 
 }
