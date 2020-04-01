@@ -2,6 +2,7 @@ package com.galvanize.entities;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
 @Table
@@ -91,5 +92,23 @@ public class Movie {
 
     public String getYear(){
         return ""+released.getYear();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Movie movie = (Movie) o;
+        return getMovieId() == movie.getMovieId() &&
+                Objects.equals(getImdbId(), movie.getImdbId()) &&
+                Objects.equals(getActors(), movie.getActors()) &&
+                Objects.equals(getDirector(), movie.getDirector()) &&
+                Objects.equals(getTitle(), movie.getTitle()) &&
+                Objects.equals(getReleased(), movie.getReleased());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getMovieId(), getImdbId(), getActors(), getDirector(), getTitle(), getReleased());
     }
 }

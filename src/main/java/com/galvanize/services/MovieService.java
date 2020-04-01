@@ -1,5 +1,6 @@
 package com.galvanize.services;
 
+import com.galvanize.entities.Movie;
 import com.galvanize.repositories.MovieRepository;
 import org.springframework.stereotype.Service;
 
@@ -12,5 +13,9 @@ public class MovieService {
 
     public MovieService(MovieRepository repository) {
         this.repository = repository;
+    }
+
+    public Movie postMovie(Movie movieToPost) {
+        return repository.save(movieToPost);
     }
 }
