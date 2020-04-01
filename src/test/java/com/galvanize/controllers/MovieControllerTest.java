@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -55,6 +55,17 @@ class MovieControllerTest {
         mvc.perform(get("/api/movie"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0]").value(expected));
+    }
+
+    @Test
+    public void getMovieByImdbId() throws Exception{
+        Movie expected = new Movie();
+        expected.setMovieId(1L);
+        expected.setImdbId("1");
+        when(service.getMovieByImdbId(anyString())).thenReturn(expected);
+        mvc.perform(get("/api/movie/"+expected.getImdbId()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").value(expected));
     }
 
 }

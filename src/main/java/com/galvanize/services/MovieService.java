@@ -23,4 +23,8 @@ public class MovieService {
     public List<Movie> getAllMovies() {
         return repository.findAll();
     }
+
+    public Movie getMovieByImdbId(String imdbId) {
+        return null;
+    }
 }

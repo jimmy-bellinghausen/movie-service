@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,6 +17,12 @@ class MovieRepositoryTest {
 
     @Autowired
     MovieRepository repository;
+
+    @Test
+    public void findByImdbId(){
+        Movie movieToFind = repository.save(new Movie("24", "Johnny Depp, Someone Else", "That guy", "The Movie", LocalDate.now()));
+        assertEquals(Optional.of(movieToFind), repository.findByImdbId(movieToFind.getImdbId()));
+    }
 
     @Test
     public void deleteMovie(){
