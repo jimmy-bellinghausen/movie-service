@@ -1,6 +1,7 @@
 package com.galvanize.services;
 
 import com.galvanize.entities.Movie;
+import com.galvanize.entities.StarRating;
 import com.galvanize.repositories.MovieRepository;
 import org.springframework.stereotype.Service;
 
@@ -30,5 +31,14 @@ public class MovieService {
 
     public List<Movie> getAllMoviesByTitle(String searchPhrase) {
         return repository.findAllByTitleContaining(searchPhrase);
+    }
+
+    public Movie patchStarRating(long movieId, StarRating ratingToPatch) {
+        Movie foundMovie = repository.findById(movieId).orElse(null);
+        if(foundMovie!=null){
+            foundMovie.getRatings().put(ratingToPatch.getUserId(), ratingToPatch);
+            return repository.save(foundMovie);
+        }
+        return null;
     }
 }

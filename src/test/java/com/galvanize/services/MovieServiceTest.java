@@ -1,21 +1,24 @@
 package com.galvanize.services;
 
 import com.galvanize.entities.Movie;
+import com.galvanize.entities.StarRating;
 import com.galvanize.repositories.MovieRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 
 import javax.transaction.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @Transactional
@@ -63,6 +66,24 @@ class MovieServiceTest {
         expectedList.add(expected);
         when(repository.findAllByTitleContaining(anyString())).thenReturn(expectedList);
         assertEquals(expectedList, service.getAllMoviesByTitle("Who cares."));
+    }
+
+    @Test
+    public void patchStarRating(){
+        Movie expected = new Movie();
+        StarRating expectedStarRating = new StarRating(1L, StarRating.PossibleRatings.FIVE);
+        expected.setMovieId(1L);
+        Map<Long, StarRating> expectedRatings = new HashMap<>();
+        expectedRatings.put(expectedStarRating.getUserId(), expectedStarRating);
+        expected.setRatings(expectedRatings);
+
+        Movie startingMovie = new Movie();
+        startingMovie.setMovieId(1L);
+
+        when(repository.findById(anyLong())).thenReturn(Optional.of(startingMovie));
+        when(repository.save(any(Movie.class))).thenAnswer(input-> input.getArguments()[0]);
+
+        assertEquals(expected, service.patchStarRating(1, expectedStarRating));
     }
 
 }

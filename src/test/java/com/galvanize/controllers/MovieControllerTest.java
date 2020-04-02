@@ -94,9 +94,9 @@ class MovieControllerTest {
         expectedRatings.put(expectedStarRating.getUserId(), expectedStarRating);
         expected.setRatings(expectedRatings);
 
-        when(service.patchStarRating(any(StarRating.class))).thenReturn(expected);
+        when(service.patchStarRating(anyLong(), any(StarRating.class))).thenReturn(expected);
 
-        mvc.perform(patch("/api/movie/").content(mapper.writeValueAsString(expectedStarRating)).contentType(MediaType.APPLICATION_JSON))
+        mvc.perform(patch("/api/movie/"+expected.getMovieId()).content(mapper.writeValueAsString(expectedStarRating)).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.ratings[:1]").value(expectedStarRating));
     }
