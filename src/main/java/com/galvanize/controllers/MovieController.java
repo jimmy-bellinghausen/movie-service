@@ -1,6 +1,7 @@
 package com.galvanize.controllers;
 
 import com.galvanize.entities.Movie;
+import com.galvanize.entities.StarRating;
 import com.galvanize.services.MovieService;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,5 +33,8 @@ public class MovieController {
 
     @GetMapping("/title")
     public List<Movie> getAllMoviesByTitle(@RequestParam String containing){ return service.getAllMoviesByTitle(containing); }
+
+    @PatchMapping("/{movieId}")
+    public Movie patchStarRating(@PathVariable long movieId, @RequestBody StarRating ratingToPatch){ return service.patchStarRating(movieId,ratingToPatch);}
 
 }

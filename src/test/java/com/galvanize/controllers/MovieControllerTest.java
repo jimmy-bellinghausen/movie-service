@@ -98,7 +98,7 @@ class MovieControllerTest {
 
         mvc.perform(patch("/api/movie/"+expected.getMovieId()).content(mapper.writeValueAsString(expectedStarRating)).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.ratings[:1]").value(expectedStarRating));
+                .andExpect(jsonPath("$.ratings.1.userId").value(expectedStarRating.getUserId()));
     }
 
 }
