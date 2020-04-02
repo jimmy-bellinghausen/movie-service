@@ -2,6 +2,7 @@ package com.galvanize.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.galvanize.entities.Movie;
+import com.galvanize.entities.StarRating;
 import com.galvanize.services.MovieService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,13 +15,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import javax.transaction.Transactional;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -63,10 +64,12 @@ class MovieControllerTest {
         Movie expected = new Movie();
         expected.setMovieId(1L);
         expected.setImdbId("1");
+        expected.setRatings(new HashMap<>());
         when(service.getMovieByImdbId(anyString())).thenReturn(expected);
         mvc.perform(get("/api/movie/"+expected.getImdbId()))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$").value(expected));
+                .andExpect(jsonPath("$").value(expected))
+                .andDo(print());
     }
 
     @Test
@@ -80,6 +83,22 @@ class MovieControllerTest {
         mvc.perform(get("/api/movie/title?containing=whatever"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0]").value(expected));
+    }
+
+    @Test
+    public void patchStarRating() throws Exception{
+        Movie expected = new Movie();
+        StarRating expectedStarRating = new StarRating(1L, StarRating.PossibleRatings.FIVE);
+        expected.setMovieId(1L);
+        Map<Long, StarRating> expectedRatings = new HashMap<>();
+        expectedRatings.put(expectedStarRating.getUserId(), expectedStarRating);
+        expected.setRatings(expectedRatings);
+
+        when(service.patchStarRating(any(StarRating.class))).thenReturn(expected);
+
+        mvc.perform(patch("/api/movie/").content(mapper.writeValueAsString(expectedStarRating)).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.ratings[:1]").value(expectedStarRating));
     }
 
 }

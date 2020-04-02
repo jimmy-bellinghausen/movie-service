@@ -2,7 +2,9 @@ package com.galvanize.entities;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.Objects;
+import java.util.Map;
 
 @Entity
 @Table
@@ -23,6 +25,12 @@ public class Movie {
     LocalDate released;
     @Column
     String year;
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
+    )
+    Map<Long, StarRating> ratings = new HashMap<>();
 
     public Movie() {
     }
@@ -99,6 +107,14 @@ public class Movie {
 
     public String getYear(){
         return year;
+    }
+
+    public Map<Long, StarRating> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(Map<Long, StarRating> ratings) {
+        this.ratings = ratings;
     }
 
     @Override
