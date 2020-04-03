@@ -112,7 +112,7 @@ class MovieControllerTest {
         expectedMovies.add(expected);
         when(service.getAllMoviesByTitleAndOptionals(anyString(),anyString(),anyString(),any(Movie.GENRE.class))).thenReturn(expectedMovies);
 
-        mvc.perform(get("/api/movie/title?containing=whatever&director=Director&actor=Actor&genre=HORRO"))
+        mvc.perform(get("/api/movie/title?containing=whatever&director=Director&actor=Actor&genre=HORROR"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0]").value(expected));
     }

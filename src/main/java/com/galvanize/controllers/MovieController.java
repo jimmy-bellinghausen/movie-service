@@ -32,7 +32,17 @@ public class MovieController {
     }
 
     @GetMapping("/title")
-    public List<Movie> getAllMoviesByTitle(@RequestParam String containing){ return service.getAllMoviesByTitle(containing); }
+    public List<Movie> getAllMoviesByTitle(
+            @RequestParam String containing,
+            @RequestParam String actor,
+            @RequestParam String director,
+            @RequestParam String genre
+    ){
+        if(actor!=null||director!=null||genre!=null){
+            return service.getAllMoviesByTitleAndOptionals(containing, actor, director, Movie.GENRE.valueOf(genre));
+        }
+        return service.getAllMoviesByTitle(containing);
+    }
 
     @PatchMapping("/{movieId}")
     public Movie patchStarRating(@PathVariable long movieId, @RequestBody StarRating ratingToPatch){ return service.patchStarRating(movieId,ratingToPatch);}
