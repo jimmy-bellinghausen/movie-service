@@ -101,4 +101,20 @@ class MovieControllerTest {
                 .andExpect(jsonPath("$.ratings.1.userId").value(expectedStarRating.getUserId()));
     }
 
+    @Test
+    public void getAllMoviesByOptionals() throws Exception{
+        Movie expected = new Movie();
+        expected.setMovieId(1L);
+        expected.setActors("Search Actor");
+        expected.setDirector("The Director I Look For");
+        expected.setGenre(Movie.GENRE.HORROR);
+        List<Movie> expectedMovies = new ArrayList<>();
+        expectedMovies.add(expected);
+        when(service.getAllMoviesByTitleAndOptionals(anyString(),anyString(),anyString(),any(Movie.GENRE.class))).thenReturn(expectedMovies);
+
+        mvc.perform(get("/api/movie/title?containing=whatever&director=Director&actor=Actor&genre=HORRO"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0]").value(expected));
+    }
+
 }

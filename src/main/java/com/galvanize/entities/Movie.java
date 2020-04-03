@@ -25,12 +25,18 @@ public class Movie {
     LocalDate released;
     @Column
     String year;
+    @Column
+    GENRE genre;
     @OneToMany(
             cascade = CascadeType.ALL,
             orphanRemoval = true,
             fetch = FetchType.LAZY
     )
     Map<Long, StarRating> ratings = new HashMap<>();
+
+    public enum GENRE{
+        HORROR, COMEDY, ACTION, OTHER
+    }
 
     public Movie() {
     }
@@ -51,6 +57,23 @@ public class Movie {
         this.title = title;
         this.released = released;
         this.year = year;
+    }
+    public Movie(String imdbId, String actors, String director, String title, LocalDate released, String year, GENRE genre) {
+        this.imdbId = imdbId;
+        this.actors = actors;
+        this.director = director;
+        this.title = title;
+        this.released = released;
+        this.year = year;
+        this.genre = genre;
+    }
+
+    public GENRE getGenre() {
+        return genre;
+    }
+
+    public void setGenre(GENRE genre) {
+        this.genre = genre;
     }
 
     public long getMovieId() {

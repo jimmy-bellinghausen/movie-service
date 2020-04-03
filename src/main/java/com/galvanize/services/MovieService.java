@@ -41,4 +41,10 @@ public class MovieService {
         }
         return null;
     }
+
+    public List<Movie> getAllMoviesByTitleAndOptionals(String title, String actor, String director, Movie.GENRE genre) {
+        if(actor==null){ actor=""; }
+        if(director==null){ director=""; }
+        return repository.findAllByTitleContainingAndActorsContainingAndDirectorContainingAndGenre(title, actor, director, genre);
+    }
 }

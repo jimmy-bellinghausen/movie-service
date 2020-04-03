@@ -86,4 +86,31 @@ class MovieServiceTest {
         assertEquals(expected, service.patchStarRating(1, expectedStarRating));
     }
 
+//    @Test
+//    public void getAllMoviesByOptionalWithoutGenre(){
+//        Movie expected = new Movie();
+//        expected.setMovieId(1L);
+//        expected.setActors("Search Actor");
+//        expected.setDirector("The Director I Look For");
+//        List<Movie> expectedMovies = new ArrayList<>();
+//        expectedMovies.add(expected);
+//        when(repository.findAllByTitleContainingAndActorsContainingAndDirectorContaining(anyString(),anyString(),anyString())).thenReturn(expectedMovies);
+//
+//        assertEquals(expectedMovies, service.getAllMoviesByTitleAndOptionals("","","", null));
+//    }
+
+    @Test
+    public void getAllMoviesByOptional(){
+        Movie expected = new Movie();
+        expected.setMovieId(1L);
+        expected.setActors("Search Actor");
+        expected.setDirector("The Director I Look For");
+        expected.setGenre(Movie.GENRE.HORROR);
+        List<Movie> expectedMovies = new ArrayList<>();
+        expectedMovies.add(expected);
+        when(repository.findAllByTitleContainingAndActorsContainingAndDirectorContainingAndGenre(anyString(),anyString(),anyString(),any(Movie.GENRE.class))).thenReturn(expectedMovies);
+
+        assertEquals(expectedMovies, service.getAllMoviesByTitleAndOptionals("","","", Movie.GENRE.valueOf("HORROR")));
+    }
+
 }
