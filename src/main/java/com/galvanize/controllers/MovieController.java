@@ -34,9 +34,9 @@ public class MovieController {
     @GetMapping("/title")
     public List<Movie> getAllMoviesByTitle(
             @RequestParam String containing,
-            @RequestParam String actor,
-            @RequestParam String director,
-            @RequestParam String genre
+            @RequestParam(required = false) String actor,
+            @RequestParam(required = false) String director,
+            @RequestParam(required = false) String genre
     ){
         if(actor!=null||director!=null||genre!=null){
             return service.getAllMoviesByTitleAndOptionals(containing, actor, director, Movie.GENRE.valueOf(genre));
