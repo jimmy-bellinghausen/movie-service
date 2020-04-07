@@ -113,4 +113,10 @@ class MovieServiceTest {
         assertEquals(expectedMovies, service.getAllMoviesByTitleAndOptionals("","","", Movie.GENRE.valueOf("HORROR")));
     }
 
+    @Test
+    public void deleteMovieById(){
+        when(repository.deleteByMovieId(anyLong())).thenReturn(1);
+        assertTrue(service.deleteMovieById(1L));
+    }
+
 }

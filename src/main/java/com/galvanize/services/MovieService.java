@@ -50,4 +50,8 @@ public class MovieService {
         }
         return repository.findAllByTitleContainingAndActorsContainingAndDirectorContainingAndGenre(title, actor, director, genre);
     }
+
+    public boolean deleteMovieById(long movieId) {
+        return repository.deleteByMovieId(movieId)==1;
+    }
 }

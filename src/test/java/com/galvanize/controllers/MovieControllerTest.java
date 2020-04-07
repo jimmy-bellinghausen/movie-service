@@ -117,4 +117,13 @@ class MovieControllerTest {
                 .andExpect(jsonPath("$[0]").value(expected));
     }
 
+    @Test
+    public void deleteMovieById() throws Exception{
+        when(service.deleteMovieById(anyLong())).thenReturn(true);
+        mvc.perform(delete("/api/movie/1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").value(true));
+    }
+
+
 }
