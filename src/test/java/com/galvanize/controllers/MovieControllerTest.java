@@ -64,8 +64,7 @@ class MovieControllerTest {
         Movie expected = new Movie();
         expected.setMovieId(1L);
         expected.setImdbId("1");
-        expected.setRatings(new HashMap<>());
-        when(service.getMovieByImdbId(anyString())).thenReturn(expected);
+        when(service.getMovieByImdbId(anyString())).thenReturn(null);
         mvc.perform(get("/api/movie/"+expected.getImdbId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").value(expected))
@@ -92,9 +91,6 @@ class MovieControllerTest {
         expected.setMovieId(1L);
         Map<Long, StarRating> expectedRatings = new HashMap<>();
         expectedRatings.put(expectedStarRating.getUserId(), expectedStarRating);
-        expected.setRatings(expectedRatings);
-
-        when(service.patchStarRating(anyLong(), any(StarRating.class))).thenReturn(expected);
 
         mvc.perform(patch("/api/movie/"+expected.getMovieId()).content(mapper.writeValueAsString(expectedStarRating)).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -125,5 +121,12 @@ class MovieControllerTest {
                 .andExpect(jsonPath("$").value(true));
     }
 
+    @Test
+    public void movieExistsByImdbId() throws Exception{
+        when(service.movieExistsByImdbId(anyString())).thenReturn(true);
+        mvc.perform(get("/api/movie/esists/"+"any imdb id"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").value(true));
+    }
 
 }

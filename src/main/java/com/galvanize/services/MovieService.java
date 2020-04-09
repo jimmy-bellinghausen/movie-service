@@ -33,15 +33,6 @@ public class MovieService {
         return repository.findAllByTitleContaining(searchPhrase);
     }
 
-    public Movie patchStarRating(long movieId, StarRating ratingToPatch) {
-        Movie foundMovie = repository.findById(movieId).orElse(null);
-        if(foundMovie!=null){
-            foundMovie.getRatings().put(ratingToPatch.getUserId(), ratingToPatch);
-            return repository.save(foundMovie);
-        }
-        return null;
-    }
-
     public List<Movie> getAllMoviesByTitleAndOptionals(String title, String actor, String director, Movie.GENRE genre) {
         if(actor==null){ actor=""; }
         if(director==null){ director=""; }
@@ -53,5 +44,9 @@ public class MovieService {
 
     public boolean deleteMovieById(long movieId) {
         return repository.deleteByMovieId(movieId)==1;
+    }
+
+    public boolean movieExistsByImdbId(String imdbId) {
+        return repository.existsByImdbId(imdbId);
     }
 }

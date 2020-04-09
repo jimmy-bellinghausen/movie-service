@@ -44,9 +44,6 @@ public class MovieController {
         return service.getAllMoviesByTitle(containing);
     }
 
-    @PatchMapping("/{movieId}")
-    public Movie patchStarRating(@PathVariable long movieId, @RequestBody StarRating ratingToPatch){ return service.patchStarRating(movieId,ratingToPatch);}
-
     @DeleteMapping("/{movieId}")
     public boolean deleteMovieById(@PathVariable long movieId) {return service.deleteMovieById(movieId);}
 

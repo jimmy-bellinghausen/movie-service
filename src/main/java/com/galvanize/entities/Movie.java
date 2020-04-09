@@ -27,12 +27,6 @@ public class Movie {
     String year;
     @Column
     GENRE genre;
-    @OneToMany(
-            cascade = CascadeType.ALL,
-            orphanRemoval = true,
-            fetch = FetchType.LAZY
-    )
-    Map<Long, StarRating> ratings = new HashMap<>();
 
     public enum GENRE{
         HORROR, COMEDY, ACTION, OTHER
@@ -130,14 +124,6 @@ public class Movie {
 
     public String getYear(){
         return year;
-    }
-
-    public Map<Long, StarRating> getRatings() {
-        return ratings;
-    }
-
-    public void setRatings(Map<Long, StarRating> ratings) {
-        this.ratings = ratings;
     }
 
     @Override

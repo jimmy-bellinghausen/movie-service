@@ -68,23 +68,7 @@ class MovieServiceTest {
         assertEquals(expectedList, service.getAllMoviesByTitle("Who cares."));
     }
 
-    @Test
-    public void patchStarRating(){
-        Movie expected = new Movie();
-        StarRating expectedStarRating = new StarRating(1L, StarRating.PossibleRatings.FIVE);
-        expected.setMovieId(1L);
-        Map<Long, StarRating> expectedRatings = new HashMap<>();
-        expectedRatings.put(expectedStarRating.getUserId(), expectedStarRating);
-        expected.setRatings(expectedRatings);
 
-        Movie startingMovie = new Movie();
-        startingMovie.setMovieId(1L);
-
-        when(repository.findById(anyLong())).thenReturn(Optional.of(startingMovie));
-        when(repository.save(any(Movie.class))).thenAnswer(input-> input.getArguments()[0]);
-
-        assertEquals(expected, service.patchStarRating(1, expectedStarRating));
-    }
 
     @Test
     public void getAllMoviesByOptionalWithoutGenre(){
@@ -117,6 +101,12 @@ class MovieServiceTest {
     public void deleteMovieById(){
         when(repository.deleteByMovieId(anyLong())).thenReturn(1);
         assertTrue(service.deleteMovieById(1L));
+    }
+
+    @Test
+    public void movieExistsByImdbId(){
+        when(repository.existsByImdbId(anyString())).thenReturn(true);
+        assertTrue(service.movieExistsByImdbId("anything"));
     }
 
 }
