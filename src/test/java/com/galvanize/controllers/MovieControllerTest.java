@@ -124,7 +124,7 @@ class MovieControllerTest {
     @Test
     public void movieExistsByImdbId() throws Exception{
         when(service.movieExistsByImdbId(anyString())).thenReturn(true);
-        mvc.perform(get("/api/movie/esists/"+"any imdb id"))
+        mvc.perform(get("/api/movie/exists/"+"any imdb id"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").value(true));
     }
